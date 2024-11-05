@@ -8,7 +8,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(features=".//src/test/resources/Features/Form.feature",
 	glue="stepDefinitions",
-	dryRun=true,
+	dryRun=false,
 	monochrome=true,
 	plugin={"pretty","html:.//target/test-output"})
 public class TestRunner {
