@@ -11,7 +11,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.en.*;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import nch.wcmstests.pages.GmeApplicationFormPage;
 
 public class Form {
@@ -50,17 +52,21 @@ public class Form {
 	}
 
 	@Then("fill required fields with {string} {string} {string} {string} {string}")
-	public void fill_required_fields_with(String string, String string2, String string3, String string4, String string5) {
-	    page.setStart_date_loc(string);
-	    page.setEnd_date_loc(string2);
+	public void fill_required_fields_with(String string, String string2, String string3, String string4, String string5) throws InterruptedException {
+	    page.setStart_date_loc(UtilClass.generateCurrentDate());
+		Thread.sleep(3000);
+		page.setEnd_date_loc(UtilClass.generateRandomFutureDate());
+		Thread.sleep(3000);
 	    page.setNew_to_nch_yes_loc();
 	    page.setRequest_rotation_loc(string3);
 	    page.setSponsoring_inst_loc(string4);
 	    page.setCurrent_prog_loc(string5);
+		Thread.sleep(3000);
 	}
 
 	@When("select next screen")
-	public void select_next_screen() {
+	public void select_next_screen() throws InterruptedException {
 	    page.setNext_scr_loc();
+		Thread.sleep(3000);
 	}
 }

@@ -1,34 +1,36 @@
 package stepDefinitions;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
+import org.apache.commons.text.RandomStringGenerator;
 
 public class UtilClass {
 
-//	public WebDriver driver;
-//	
-//	public Properties p;
+	public static String generateCurrentDate() {
+		LocalDate currentDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		String formattedDate = currentDate.format(formatter);
+		return formattedDate;
+	}
+
+
+    public static String generateRandomFutureDate() {
+		LocalDate currentDate = LocalDate.now();
+		LocalDate futureDate = currentDate.plusYears(2);
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		String formattedFutureDate = futureDate.format(dateFormatter);
+		return formattedFutureDate;
+	}
+
 	
-//	@Before
-//	public void setup() throws IOException
-//	{
-//		driver = new ChromeDriver();
-//		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//		driver.manage().window().maximize();
-//		FileReader file = new FileReader("./src/test/resources/application.properties");
-//		p = new Properties();
-//		p.load(file);
-//	}
-//	
-//	public RandomStringUtils randomeString() {
-//		RandomStringUtils generatestring = RandomStringUtils.secure();
-//		return generatestring;
-//	}
-//	
-//	@After
-//	public void teardown() {
-//		driver.quit();
-//	}
-//	
+	public static String generateRandomString(int length) {
+		  RandomStringGenerator generator = new RandomStringGenerator
+                                            .Builder()
+                                            .withinRange('0','z')
+                                            .filteredBy(Character::isLetterOrDigit).build();	
+        return generator.generate(length);
+	}
 	
 	
 	
