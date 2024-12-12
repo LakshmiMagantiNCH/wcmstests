@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.text.RandomStringGenerator;
+import org.testng.annotations.Test;
 
 public class UtilClass {
 
@@ -23,7 +24,6 @@ public class UtilClass {
 		return formattedFutureDate;
 	}
 
-	
 	public static String generateRandomString(int length) {
 		  RandomStringGenerator generator = new RandomStringGenerator
                                             .Builder()

@@ -48,16 +48,17 @@ public class GmeApplicationFormPage extends BasePage{
 	   By previous_screen_loc = By.xpath("//form[@name='applicantForm']//button[@type='button']//span[@class='show-for-medium'][normalize-space()='Screen']");
 	   By next_screen_loc = By.xpath("//button[@ng-click='aic.next()']//span[@class='show-for-medium'][normalize-space()='Screen']");
 
-		public void startApplication()
+	   public void startApplication()
 		{
 			driver.findElement(start_application_button_loc).click();
 		}
 
+	
 		public void setStart_date_loc(String string) {
 			driver.findElement(start_date_loc).sendKeys(string);
 		}
 
-		public void setEnd_date_loc(String string2) {
+	   public void setEnd_date_loc(String string2) {
 			driver.findElement(end_date_loc).sendKeys(string2);
 		}
 
@@ -69,6 +70,7 @@ public class GmeApplicationFormPage extends BasePage{
 			driver.findElement(new_to_nch_no_loc).click();
 		}
 
+	
 		public void setRequest_rotation_loc(String string3) {
 			driver.findElement(request_rot_selector_loc).click();
 			driver.findElement(request_rotation_loc).sendKeys(string3);
