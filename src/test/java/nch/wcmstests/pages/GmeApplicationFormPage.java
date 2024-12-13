@@ -40,13 +40,16 @@ public class GmeApplicationFormPage extends BasePage{
 	   By covid_vaccine_type_loc = By.xpath("//select[@name='aicCovidVaccineType']");
 	   By covid_first_vaccine_date_loc = By.xpath("//input[@name='aicCovidFirstVaccine']");
 	   By email_loc = By.xpath("//input[@name='aicEmail']");
-	   By no_DEA_number_loc = By.xpath("//input[@id='no-dea']");
+	   By med_lic_loc = By.xpath("//input[@name='aicOhioMedicalLicenseLabel']");
+	   By no_DEA_number_loc = By.xpath("//input[@id='yes-dea']");
 	   By npi_number_loc = By.xpath("//input[@name='aicNPI']");
 	   By pgy_rotation_loc = By.xpath("//select[@name='aicPGYAtRotation']");
 	   By ssn_loc = By.xpath("//input[@name='aicSSN']");
 	   By birth_date_loc = By.xpath("//input[@name='aicBirthdate']");
 	   By previous_screen_loc = By.xpath("//form[@name='applicantForm']//button[@type='button']//span[@class='show-for-medium'][normalize-space()='Screen']");
-	   By next_screen_loc = By.xpath("//button[@ng-click='aic.next()']//span[@class='show-for-medium'][normalize-space()='Screen']");
+	   By nextscreen_AF = By.xpath("//button[@ng-click='aic.next()']//span[@class='show-for-medium'][normalize-space()='Screen']");
+	   
+	   //A
 
 	   public void startApplication()
 		{
@@ -92,6 +95,43 @@ public class GmeApplicationFormPage extends BasePage{
 			driver.findElement(next_scr_loc).click();
 		}
 		
+		public void setFirstName(String firstname) {
+			driver.findElement(first_name_loc).sendKeys(firstname);		
+			}
 		
+		public void setLastName(String lastname) {
+			driver.findElement(last_name_loc).sendKeys(lastname);		
+			}
 
+		public void setEmail(String email) {
+			driver.findElement(email_loc).sendKeys(email);		
+			}
+		
+		public void setMedicalLicense(int lic) {
+			driver.findElement(med_lic_loc).sendKeys(String.valueOf(lic));		
+			}
+		
+		public void select_Radio_Button_for_DEA() {
+			driver.findElement(no_DEA_number_loc).click();
+		}
+		
+		public void setNPI(int npi) {
+			driver.findElement(npi_number_loc).sendKeys(String.valueOf(npi));
+		}
+		
+		public void setPGYRotation(String pgynumber) {
+			driver.findElement(pgy_rotation_loc).sendKeys(pgynumber);		
+			}
+		
+		public void setSSN(String ssn) {
+			driver.findElement(ssn_loc).sendKeys(ssn);		
+			}
+		
+		public void setDOB(String dob) {
+			driver.findElement(birth_date_loc).sendKeys(dob);		
+			}
+		
+		public void setNextScr_on_AF() {
+			driver.findElement(nextscreen_AF).click();
+		}
 }
