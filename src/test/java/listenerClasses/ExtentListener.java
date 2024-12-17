@@ -96,17 +96,21 @@ public class ExtentListener implements Plugin, EventListener {
           if (event.getTestStep() instanceof PickleStepTestStep) {
               PickleStepTestStep step = (PickleStepTestStep) event.getTestStep();
               String stepText = step.getStep().getText();
-
+              String screenshotPath = captureScreenshot();
+              
               ExtentTest stepNode = currentScenario.createNode(stepText);
               stepTest.set(stepNode);
               switch (event.getResult().getStatus()) {
                   case PASSED:	  
                 	  stepNode.pass(event.getTestStep().getCodeLocation());
+                      if (screenshotPath != null) {
+                    	  stepNode.pass(stepText,
+                                  MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+                      }
                       break;
                   case FAILED:
                 	  stepNode.fail(stepText + "\n" + event.getResult().getError());
                 	  stepNode.fail(event.getTestStep().getCodeLocation());
-                	  String screenshotPath = captureScreenshot();
                       if (screenshotPath != null) {
                     	  stepNode.fail(stepText,
                                   MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
@@ -146,7 +150,7 @@ public class ExtentListener implements Plugin, EventListener {
     }
     
     
-    private String captureScreenshot() {
+    public static String captureScreenshot() {
        driver = threadLocalDriver.get();
         if (driver == null) {
         	 System.err.println("Driver is not initialized!");
@@ -190,6 +194,8 @@ public class ExtentListener implements Plugin, EventListener {
         ExtentTest currentStepTest = stepTest.get();
         if (currentStepTest != null) {
             currentStepTest.info(message);
+        }else {
+            System.out.println("Test step is null. Logging failed: " + message);
         }
     }
 }
