@@ -60,8 +60,7 @@ public class GmeApplicationFormPage extends BasePage {
 	By birth_date_loc = By.xpath("//input[@name='aicBirthdate']");
 	By previous_screen_loc = By.xpath(
 			"//form[@name='applicantForm']//button[@type='button']//span[@class='show-for-medium'][normalize-space()='Screen']");
-	By nextscreen_AF = By
-			.xpath("//button[@ng-click='aic.next()']//span[@class='show-for-medium'][normalize-space()='Screen']");
+	By nextscreen_AF = By.xpath("//button[@ng-click='aic.next()']//span[@class='show-for-medium'][normalize-space()='Screen']");
 
 	// Emergency info page
 	By emergency_contact = By.xpath("//input[@name='ecicEmergencyContact']");
@@ -279,7 +278,7 @@ public class GmeApplicationFormPage extends BasePage {
 		try {
 			Select select = new Select(dropdownElement);
 
-			List<String> ignoreOptions = Arrays.asList("OTHER Please enter below", "Select", "IDAHO", "MONTANA", "DELAWARE", "ALASKA");
+			List<String> ignoreOptions = Arrays.asList("OTHER Please enter below", "Select", "IDAHO", "WYOMING", "MONTANA", "DELAWARE", "ALASKA");
 			// Step 3: Get all the available options
 			List<WebElement> validOptions = select.getOptions()
 					.stream()

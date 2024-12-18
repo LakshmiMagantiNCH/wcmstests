@@ -189,4 +189,35 @@ public class Form {
 		page.setCheckbx();
 		Thread.sleep(5000);
 	}
+	
+	@Then("application submitted successfully")
+	public void application_submitted_successfully() {
+		try {
+
+		Assert.assertEquals("Thank you",
+				driver.findElement(By.xpath("//p[normalize-space()='Thank you']")).getText());
+		} catch (Exception e) {
+			Assert.fail(e.getMessage());
+			ExtentListener.log("Application Not submitted");
+		}
+	}
+	
+	@Then("fill required fields with empty value")
+	public void fill_required_fields_with_empty_value() throws Exception {
+		page.setNext_scr_loc();
+		Thread.sleep(5000);
+	}
+
+	@Then("verify expected error messages displayed on page")
+	public void verify_expected_error_messages_displayed_on_page() {
+		try {
+
+			Assert.assertEquals("There are some errors in your form.",
+					driver.findElement(By.xpath("//p[contains(text(),'There are some errors in your form.')]")).getText());
+			} catch (Exception e) {
+				Assert.fail(e.getMessage());
+				ExtentListener.log("Application Not submitted");
+			}
+	}
+
 }

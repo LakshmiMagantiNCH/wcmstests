@@ -1,5 +1,6 @@
 Feature: Form
 
+  @positive
   Scenario Outline: Successful GME application form
     Given user opens "<url>"
     When user select start application form button
@@ -17,4 +18,11 @@ Feature: Form
 
     Examples: 
       | url      | request_rotation   | sponsoring_inst  | current_program | email          | pgy_rotation | ssn         |
-      | gme.form | Allergy Immunology | CLEVELAND CLINIC | DO_PEDIATRICS   | test@gmail.com |  1           | 111-22-2345 |
+      | gme.form | Allergy Immunology | CLEVELAND CLINIC | DO_PEDIATRICS   | test@gmail.com |            1 | 111-22-2345 |
+
+  @negative
+  Scenario: Missing Required fields on GME application form
+    Given user opens "gme.form"
+    When user select start application form button
+    Then fill required fields with empty value
+    Then verify expected error messages displayed on page
