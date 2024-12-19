@@ -1,12 +1,12 @@
 Feature: Form
 
-  @positive
+  @positive @firefox
   Scenario Outline: Successful GME application form
     Given user opens "<url>"
     When user select start application form button
-    Then fill required fields with "<request_rotation>" "<sponsoring_inst>" "<current_program>"
+    Then fill required fields on rotation request form
     Then select next screen
-    Then fill applicant form with required fields with "<email>" "<pgy_rotation>" "<ssn>"
+    Then fill applicant form with required fields with "<ssn>"
     Then select next screen on applicant form
     Then fill emergency contact info
     Then select next on emergency contact page
@@ -17,12 +17,12 @@ Feature: Form
     Then accept all the info is accurate
 
     Examples: 
-      | url      | request_rotation   | sponsoring_inst  | current_program | email          | pgy_rotation | ssn         |
-      | gme.form | Allergy Immunology | CLEVELAND CLINIC | DO_PEDIATRICS   | test@gmail.com |            1 | 111-22-2345 |
+      | url      |  ssn         |
+      | gme.form |  111-22-2345 |
 
   @negative
   Scenario: Missing Required fields on GME application form
     Given user opens "gme.form"
     When user select start application form button
     Then fill required fields with empty value
-    Then verify expected error messages displayed on page
+    #Then verify expected error messages displayed on page

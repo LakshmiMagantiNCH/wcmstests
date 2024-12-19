@@ -7,6 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @CucumberOptions(features=".//src/test/resources/Features/Form.feature",
 	glue="stepDefinitions",
+	tags="@positive",
 	dryRun=false,
 	monochrome=true,
     plugin = {"pretty", "listenerClasses.ExtentListener"

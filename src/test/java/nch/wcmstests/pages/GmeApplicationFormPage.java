@@ -114,19 +114,16 @@ public class GmeApplicationFormPage extends BasePage {
 		driver.findElement(new_to_nch_no_loc).click();
 	}
 
-	public void setRequest_rotation_loc(String reqrot) {
+	public void setRequest_rotation_loc() {
 		getRandomOption(driver.findElement(request_rotation_loc));
-//		driver.findElement(request_rotation_loc).sendKeys(reqrot);
 	}
 
-	public void setSponsoring_inst_loc(String spon) {
+	public void setSponsoring_inst_loc() {
 		getRandomOption(driver.findElement(sponsoring_inst_loc));
-//		driver.findElement(sponsoring_inst_loc).sendKeys(spon);
 	}
 
-	public void setCurrent_prog_loc(String curr) {
+	public void setCurrent_prog_loc() {
 		getRandomOption(driver.findElement(current_prog_loc));
-//		driver.findElement(current_prog_loc).sendKeys(curr);
 	}
 
 	public void setPrevious_scr_loc() {
@@ -189,29 +186,24 @@ public class GmeApplicationFormPage extends BasePage {
 		driver.findElement(nextscr_EC).click();
 	}
 
-	public void setState(String stte) {
+	public void setState() {
 		getRandomOption(driver.findElement(state));
-//		driver.findElement(state).sendKeys(stte);
 	}
 
-	public void setCity(String citi) {
+	public void setCity() {
 		getRandomOption(driver.findElement(med_cty));
-//		driver.findElement(med_cty).sendKeys(citi);
 	}
 
-	public void setMedsch(String medsch) {
+	public void setMedsch() {
 		getRandomOption(driver.findElement(med_sch));
-//		driver.findElement(med_sch).sendKeys(medsch);
 	}
 
-	public void setDegree(String deg) {
+	public void setDegree() {
 		getRandomOption(driver.findElement(degree));
-//		driver.findElement(degree).sendKeys(deg);
 	}
 
-	public void setStrMth(String stmt) {
+	public void setStrMth() {
 		getRandomOption(driver.findElement(start_mth));
-//		driver.findElement(start_mth).sendKeys(stmt);
 	}
 
 	public void setStrYr() {
@@ -219,9 +211,8 @@ public class GmeApplicationFormPage extends BasePage {
 		driver.findElement(start_yr).sendKeys(pastyr);
 	}
 
-	public void setGradMnth(String grmt) {
+	public void setGradMnth() {
 		getRandomOption(driver.findElement(grad_mnth));
-//		driver.findElement(grad_mnth).sendKeys(grmt);
 	}
 
 	public void setGradyr() {
@@ -233,14 +224,12 @@ public class GmeApplicationFormPage extends BasePage {
 		driver.findElement(nextscr_MDC).click();
 	}
 
-	public void setPGY(String pg) {
+	public void setPGY() {
 		getRandomOption(driver.findElement(pgy));
-//		driver.findElement(pgy).sendKeys(pg);
 	}
 
-	public void setBmth(String mt) {
+	public void setBmth() {
 		getRandomOption(driver.findElement(bgmth));
-//		driver.findElement(bgmth).sendKeys(mt);
 	}
 
 	public void setBGyr() {
@@ -248,9 +237,8 @@ public class GmeApplicationFormPage extends BasePage {
 		driver.findElement(bgyr).sendKeys(bgy);
 	}
 
-	public void setEndMth(String enmt) {
+	public void setEndMth() {
 		getRandomOption(driver.findElement(end_mth));
-//		driver.findElement(end_mth).sendKeys(enmt);
 	}
 
 	public void setEndYr() {
@@ -278,7 +266,7 @@ public class GmeApplicationFormPage extends BasePage {
 		try {
 			Select select = new Select(dropdownElement);
 
-			List<String> ignoreOptions = Arrays.asList("OTHER Please enter below", "Select", "IDAHO", "WYOMING", "MONTANA", "DELAWARE", "ALASKA");
+			List<String> ignoreOptions = Arrays.asList("OTHER Please enter below", "other", "Select", "IDAHO", "WYOMING", "MONTANA", "DELAWARE", "ALASKA");
 			// Step 3: Get all the available options
 			List<WebElement> validOptions = select.getOptions()
 					.stream()

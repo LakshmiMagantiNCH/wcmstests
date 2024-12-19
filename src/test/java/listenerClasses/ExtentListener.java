@@ -38,6 +38,10 @@ public class ExtentListener implements Plugin, EventListener {
 		return threadLocalDriver.get();
 	}
 
+	public static ExtentTest getExtentTest() {
+		return stepTest.get();
+	}
+
 	@Override
 	public void setEventPublisher(EventPublisher publisher) {
 		// Subscribe to Cucumber events
@@ -70,6 +74,7 @@ public class ExtentListener implements Plugin, EventListener {
 					extentReports.attachReporter(sparkReporter);
 					extentReports.setSystemInfo("Environment", "QA");
 					extentReports.setSystemInfo("Browser name", "Chrome");
+
 				}
 			}
 		}
@@ -85,23 +90,22 @@ public class ExtentListener implements Plugin, EventListener {
 
 	private void onTestCaseStarted(TestCaseStarted event) {
 		String featureName = event.getTestCase().getUri().toString();
-	
+
 		featureName = featureName.substring(featureName.lastIndexOf("/") + 1).replace(".feature", "");
 
 		// Create a test node for the feature if not already created
-		   if (!featureTests.containsKey(featureName)) {
+		if (!featureTests.containsKey(featureName)) {
 //			   featureTests.putIfAbsent(featureName, extentReports.createTest(featureName));
-			   currentScenario = extentReports.createTest(featureName);
-			   featureTests.put(featureName, currentScenario);
-	        }
-		
+			currentScenario = extentReports.createTest(featureName);
+			featureTests.put(featureName, currentScenario);
+		}
 
 		// Create a test node for the scenario
-		currentScenario = featureTests.get(featureName).createNode(event.getTestCase().getName());
+		currentScenario = featureTests.get(featureName).createNode("<b style='color:blue; font-size:16px;'>"+event.getTestCase().getName()+"</b>");
+
 	}
 
 	private void onTestStepFinished(TestStepFinished event) {
-
 		if (currentScenario == null) {
 			return;
 		}
@@ -116,9 +120,9 @@ public class ExtentListener implements Plugin, EventListener {
 			switch (event.getResult().getStatus()) {
 			case PASSED:
 				stepNode.pass(event.getTestStep().getCodeLocation());
-				if (screenshotPath != null) {
-					stepNode.pass(stepText, MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
-				}
+//				if (screenshotPath != null) {
+//					stepNode.pass(stepText, MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+//				}
 				break;
 			case FAILED:
 				stepNode.fail(stepText + "\n" + event.getResult().getError());
