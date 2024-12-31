@@ -15,10 +15,14 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 public class UtilClass {
+	
 
 	public static String generateCurrentDate() {
 		LocalDate currentDate = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		 DateTimeFormatter formatter =  WebDriverFactory.isFirefox
+		            ? DateTimeFormatter.ofPattern("yyyy-MM-dd") // Firefox format
+		            : DateTimeFormatter.ofPattern("MM/dd/yyyy"); // Default format (e.g., Chrome)
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		String formattedDate = currentDate.format(formatter);
 		return formattedDate;
 	}
@@ -27,7 +31,10 @@ public class UtilClass {
     public static String generateRandomFutureDate() {
 		LocalDate currentDate = LocalDate.now();
 		LocalDate futureDate = currentDate.plusYears(2);
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		 DateTimeFormatter dateFormatter = WebDriverFactory.isFirefox
+		            ? DateTimeFormatter.ofPattern("yyyy-MM-dd") // Firefox format
+		            : DateTimeFormatter.ofPattern("MM/dd/yyyy"); // Default format (e.g., Chrome)
+//		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		String formattedFutureDate = futureDate.format(dateFormatter);
 		return formattedFutureDate;
 	}
@@ -79,5 +86,7 @@ public class UtilClass {
 	            return null;
 	        }
 	    }
+	  
+	 
 
 }

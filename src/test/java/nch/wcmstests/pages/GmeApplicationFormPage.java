@@ -1,5 +1,6 @@
 package nch.wcmstests.pages;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
@@ -11,7 +12,9 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GmeApplicationFormPage extends BasePage {
 
@@ -35,8 +38,10 @@ public class GmeApplicationFormPage extends BasePage {
 
 	// Rotation Request form page locators
 	By start_application_button_loc = By.xpath("//strong[normalize-space()='Start Application']");
-	By start_date_loc = By.xpath("//input[@name='rrcStartDate']");
-	By end_date_loc = By.xpath("//input[@name='rrcEndDate']");
+//	By start_date_loc = By.xpath("//input[@name='rrcStartDate']");
+	By start_date_loc = By.name("rrcStartDate");
+	By end_date_loc = By.name("rrcEndDate");
+//	By end_date_loc = By.xpath("//input[@name='rrcEndDate']");
 	By new_to_nch_yes_loc = By.xpath("//input[@id='new-to-NCH-yes']");
 	By new_to_nch_no_loc = By.xpath("//input[@id='new-to-NCH-no']");
 	By request_rotation_loc = By.xpath("//select[@name='rrcRequestedRotation']");
@@ -60,7 +65,8 @@ public class GmeApplicationFormPage extends BasePage {
 	By birth_date_loc = By.xpath("//input[@name='aicBirthdate']");
 	By previous_screen_loc = By.xpath(
 			"//form[@name='applicantForm']//button[@type='button']//span[@class='show-for-medium'][normalize-space()='Screen']");
-	By nextscreen_AF = By.xpath("//button[@ng-click='aic.next()']//span[@class='show-for-medium'][normalize-space()='Screen']");
+	By nextscreen_AF = By
+			.xpath("//button[@ng-click='aic.next()']//span[@class='show-for-medium'][normalize-space()='Screen']");
 
 	// Emergency info page
 	By emergency_contact = By.xpath("//input[@name='ecicEmergencyContact']");
@@ -83,7 +89,8 @@ public class GmeApplicationFormPage extends BasePage {
 	// PG info page
 	By pgyttl = By.xpath("//h2[@id='postGraduateTrainingLabel']");
 	By pgy = By.xpath("//select[@name='pgtcPGY']");
-	By bgmth = By.xpath("//select[@name='pgtcBeginMonth']");
+//	By bgmth = By.xpath("//select[@name='pgtcBeginMonth']");
+	By bgmth = By.name("pgtcBeginMonth");
 	By bgyr = By.xpath("//input[@name='pgtcBeginYear']");
 	By end_mth = By.xpath("//select[@name='pgtcEndMonth']");
 	By end_yr = By.xpath("//input[@name='pgtcEndYear']");
@@ -262,16 +269,21 @@ public class GmeApplicationFormPage extends BasePage {
 	}
 
 	public void getRandomOption(WebElement dropdownElement) {
-
+		scrolltoView(dropdownElement);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.pollingEvery(Duration.ofMillis(500));
+		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(dropdownElement));
 		try {
-			Select select = new Select(dropdownElement);
+			 
+			Select select = new Select(element);
 
-			List<String> ignoreOptions = Arrays.asList("OTHER Please enter below", "other", "Select", "IDAHO", "WYOMING", "MONTANA", "DELAWARE", "ALASKA");
+			List<String> ignoreOptions = Arrays.asList("OTHER Please enter below", "other", "Select", "IDAHO",
+					"WYOMING", "MONTANA", "DELAWARE", "ALASKA");
 			// Step 3: Get all the available options
-			List<WebElement> validOptions = select.getOptions()
-					.stream()
+			List<WebElement> validOptions = select.getOptions().stream()
 					.filter(option -> !option.getText().trim().isEmpty())
-					.filter(option -> ignoreOptions.stream().noneMatch(ignore -> ignore.equalsIgnoreCase(option.getText())))
+					.filter(option -> ignoreOptions.stream()
+							.noneMatch(ignore -> ignore.equalsIgnoreCase(option.getText())))
 					.collect(Collectors.toList());
 
 			if (validOptions.isEmpty()) {
@@ -293,6 +305,5 @@ public class GmeApplicationFormPage extends BasePage {
 		}
 
 	}
-
 
 }

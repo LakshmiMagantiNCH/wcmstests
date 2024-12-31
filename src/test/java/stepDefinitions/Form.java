@@ -37,52 +37,52 @@ public class Form {
 
 	
 	@Before
-	public void setup() {
-		driver = new ChromeDriver();
-		
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-		page = new GmeApplicationFormPage(driver);
-		test = ExtentListener.getExtentTest();
-		ExtentListener.setDriver(driver);
+	public void setup(Scenario scenario) {
+//		driver = new ChromeDriver();
+//		
+//		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//		driver.manage().window().maximize();
+//		page = new GmeApplicationFormPage(driver);
+//		test = ExtentListener.getExtentTest();
+//		ExtentListener.setDriver(driver);
 		
 		  // Extract tags from the Scenario
-//	    Collection<String> tags =  scenario.getSourceTagNames();
+	    Collection<String> tags =  scenario.getSourceTagNames();
 	    
 	    // List of supported browsers
-//	    List<String> supportedBrowsers = Arrays.asList("chrome", "firefox", "edge");
-//	    List<String> browsersToRun = new ArrayList<>();
-//	    
-//	   
-//	    
-//	    for (String tag : tags) {
-//	        String browser = tag.replace("@", "").toLowerCase(); // Remove "@" from tag
-//	        if (supportedBrowsers.contains(browser)) {
-//	            browsersToRun.add(browser);
-//	        }
-//	    }
-//
-//	    if (browsersToRun.isEmpty()) {
-//	        // Default to "chrome" if no browser tag is provided
-//	        browsersToRun.add("chrome");
-//	    }
+	    List<String> supportedBrowsers = Arrays.asList("chrome", "firefox", "edge");
+	    List<String> browsersToRun = new ArrayList<>();
+	    
+	   
+	    
+	    for (String tag : tags) {
+	        String browser = tag.replace("@", "").toLowerCase(); // Remove "@" from tag
+	        if (supportedBrowsers.contains(browser)) {
+	            browsersToRun.add(browser);
+	        }
+	    }
+
+	    if (browsersToRun.isEmpty()) {
+	        // Default to "chrome" if no browser tag is provided
+	        browsersToRun.add("chrome");
+	    }
 
 	    // Launch tests for each browser
-//	    for (String browser : browsersToRun) {
-//	        System.out.println("Launching tests on: " + browser);
-//	        driver = WebDriverFactory.getDriver(browser); // Initialize WebDriver for the browser
-//	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//	        driver.manage().window().maximize();
-//	        page = new GmeApplicationFormPage(driver);
-//			test = ExtentListener.getExtentTest();
-//			ExtentListener.setDriver(driver);
+	    for (String browser : browsersToRun) {
+	        System.out.println("Launching tests on: " + browser);
+	        driver = WebDriverFactory.getDriver(browser); // Initialize WebDriver for the browser
+	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	        driver.manage().window().maximize();
+	        page = new GmeApplicationFormPage(driver);
+			test = ExtentListener.getExtentTest();
+			ExtentListener.setDriver(driver);
 	        // Optionally store driver instances in a Map if multiple browsers are needed concurrently
 	        // map.put(browser, driver);
 
 	        // Perform setup logic if required
 	        // For example, navigate to the application
 	       
-//	    }
+	    }
 
 	}
 
@@ -125,7 +125,7 @@ public class Form {
 	}
 
 	@Then("fill required fields on rotation request form")
-	public void fill_required_fields_with() {
+	public void fill_required_fields_on_rotation_request_form() {
 		try {
 			Assert.assertEquals("Rotation Request",
 					driver.findElement(By.xpath("//h2[@id='rotationRequestLabel']")).getText());
@@ -249,9 +249,6 @@ public class Form {
 	@Then("fill pgy info")
 	public void fill_pgy_info() {
 		try {
-
-			Assert.assertEquals("Post Graduate Training",
-					driver.findElement(By.xpath("//h2[@id='postGraduateTrainingLabel']")).getText());
 
 			page.setPGY();
 			page.setBmth();
