@@ -1,6 +1,5 @@
 package nch.wcmstests.pages;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
@@ -12,9 +11,9 @@ import java.util.stream.Collectors;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import config.WebDriverFactory;
 
 public class GmeApplicationFormPage extends BasePage {
 
@@ -100,7 +99,10 @@ public class GmeApplicationFormPage extends BasePage {
 
 	// confirmation checkbox
 	By selectchbx = By.xpath("//input[@name='rcICertify']");
-
+	//submit button
+	By submit = By.xpath("//button[normalize-space()='Submit']");
+	
+	
 	public void startApplication() {
 		driver.findElement(start_application_button_loc).click();
 	}
@@ -265,14 +267,24 @@ public class GmeApplicationFormPage extends BasePage {
 	}
 
 	public void setCheckbx() {
+		WebElement selectchbxelement = driver.findElement(selectchbx);
+		WebDriverFactory.scrolltoView(selectchbxelement);
+		WebDriverFactory.waitForElementToBeClickable(driver, selectchbxelement, 10, 500);
 		driver.findElement(selectchbx).click();
 	}
 
+	public void submit() {
+		WebElement submitelement = driver.findElement(submit);
+		WebDriverFactory.scrolltoView(submitelement);
+		WebDriverFactory.waitForElementToBeClickable(driver, submitelement, 10, 500);
+		driver.findElement(submit).click();
+		
+	}
+
+	
 	public void getRandomOption(WebElement dropdownElement) {
-		scrolltoView(dropdownElement);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.pollingEvery(Duration.ofMillis(500));
-		WebElement element = wait.until(ExpectedConditions.elementToBeClickable(dropdownElement));
+		WebDriverFactory.scrolltoView(dropdownElement);
+		WebElement element= WebDriverFactory.waitForElementToBeClickable(driver, dropdownElement, 10, 500);;
 		try {
 			 
 			Select select = new Select(element);
@@ -289,7 +301,6 @@ public class GmeApplicationFormPage extends BasePage {
 			if (validOptions.isEmpty()) {
 				throw new IllegalStateException("No valid options available after filtering 'OTHER' from dropdown.");
 			} else if (validOptions.size() == 1) {
-				// Only one valid option remains, select it
 				select.selectByVisibleText(validOptions.get(0).getText());
 				System.out.println("Only one valid option selected: " + validOptions.get(0).getText());
 			} else {
@@ -306,4 +317,5 @@ public class GmeApplicationFormPage extends BasePage {
 
 	}
 
+	
 }

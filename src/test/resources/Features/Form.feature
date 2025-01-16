@@ -15,12 +15,12 @@ Feature: Form
     Then fill pgy info
     Then select next screen on pgy
     Then accept all the info is accurate
-
+    Then application submitted successfully
     Examples: 
       | url      |  ssn         |
       | gme.form |  111-22-2345 |
 
-  @negative
+  @negative @firefox
   Scenario: Missing Required fields on GME application form
     Given user opens "gme.form"
     When user select start application form button

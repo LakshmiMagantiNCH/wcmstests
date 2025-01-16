@@ -120,9 +120,9 @@ public class ExtentListener implements Plugin, EventListener {
 			switch (event.getResult().getStatus()) {
 			case PASSED:
 				stepNode.pass(event.getTestStep().getCodeLocation());
-//				if (screenshotPath != null) {
-//					stepNode.pass(stepText, MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
-//				}
+				if (screenshotPath != null) {
+					stepNode.pass(stepText, MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+				}
 				break;
 			case FAILED:
 				stepNode.fail(stepText + "\n" + event.getResult().getError());

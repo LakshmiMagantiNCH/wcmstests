@@ -1,32 +1,23 @@
 package stepDefinitions;
 
 import java.io.FileReader;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.github.javafaker.Faker;
 
-
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
+import config.WebDriverFactory;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import listenerClasses.ExtentListener;
 import nch.wcmstests.pages.GmeApplicationFormPage;
+import util.UtilClass;
 
 public class Form {
 	public GmeApplicationFormPage page;
@@ -35,66 +26,12 @@ public class Form {
 	public Properties p;
 	private Faker faker = new Faker();
 
-	
-	@Before
-	public void setup(Scenario scenario) {
-//		driver = new ChromeDriver();
-//		
-//		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-//		driver.manage().window().maximize();
-//		page = new GmeApplicationFormPage(driver);
-//		test = ExtentListener.getExtentTest();
-//		ExtentListener.setDriver(driver);
-		
-		  // Extract tags from the Scenario
-	    Collection<String> tags =  scenario.getSourceTagNames();
-	    
-	    // List of supported browsers
-	    List<String> supportedBrowsers = Arrays.asList("chrome", "firefox", "edge");
-	    List<String> browsersToRun = new ArrayList<>();
-	    
-	   
-	    
-	    for (String tag : tags) {
-	        String browser = tag.replace("@", "").toLowerCase(); // Remove "@" from tag
-	        if (supportedBrowsers.contains(browser)) {
-	            browsersToRun.add(browser);
-	        }
-	    }
-
-	    if (browsersToRun.isEmpty()) {
-	        // Default to "chrome" if no browser tag is provided
-	        browsersToRun.add("chrome");
-	    }
-
-	    // Launch tests for each browser
-	    for (String browser : browsersToRun) {
-	        System.out.println("Launching tests on: " + browser);
-	        driver = WebDriverFactory.getDriver(browser); // Initialize WebDriver for the browser
-	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-	        driver.manage().window().maximize();
-	        page = new GmeApplicationFormPage(driver);
-			test = ExtentListener.getExtentTest();
-			ExtentListener.setDriver(driver);
-	        // Optionally store driver instances in a Map if multiple browsers are needed concurrently
-	        // map.put(browser, driver);
-
-	        // Perform setup logic if required
-	        // For example, navigate to the application
-	       
-	    }
-
+	public Form() {
+		driver = WebDriverFactory.getDriver();
+		page = new GmeApplicationFormPage(driver);
+		test = ExtentListener.getExtentTest();
+		ExtentListener.setDriver(driver);
 	}
-
-
-
-
-	@After
-	public void teardown(Scenario scenario) {
-
-		driver.quit();
-	}
-
 	
 	@Given("user opens {string}")
 	public void user_opens(String string) {
@@ -278,6 +215,7 @@ public class Form {
 	public void accept_all_the_info_is_accurate() {
 		try {
 			page.setCheckbx();
+			page.submit();
 		} catch (Throwable e) {
 			String errorMessage = "There are some errors in your form: ";
 			Assert.fail(errorMessage + e.getMessage());
@@ -287,9 +225,15 @@ public class Form {
 	@Then("application submitted successfully")
 	public void application_submitted_successfully() {
 		try {
-
+			WebElement successmessage = driver.findElement(By.xpath("//p[normalize-space()='Thank you']"));
+			WebDriverFactory.scrolltoView(successmessage);
+			WebDriverFactory.waitForElementToBeClickable(driver, successmessage, 10, 500);
+//			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//			wait.pollingEvery(Duration.ofMillis(500));
+//			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(successmessage));
+//		
 			Assert.assertEquals("Thank you",
-					driver.findElement(By.xpath("//p[normalize-space()='Thank you']")).getText());
+					successmessage.getText());
 		} catch (Throwable e) {
 			String errorMessage = "Application Form not submitted: ";
 			Assert.fail(errorMessage + e.getMessage());
