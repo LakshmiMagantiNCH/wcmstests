@@ -17,7 +17,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class WebDriverFactory {
 	private static ThreadLocal<WebDriver> webdriver = new ThreadLocal<>();
-	 public static boolean isFirefox = false; // Set this based on your browser detection logic
+	 public static boolean isFirefox = false; // Set this based on browser detection logic
 	 
 	
 	public static WebDriver initializeDriver(String browser) {
