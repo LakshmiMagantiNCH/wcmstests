@@ -5,9 +5,9 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features=".//src/test/resources/Features/FindADoctor.feature",
+@CucumberOptions(features=".//src/test/resources/Features/NationwideChildrens.feature",
 	glue={"stepDefinitions","hooks"},
-	tags="@postive or @negative",
+	tags="@test",
 	dryRun=false,
 	monochrome=true,
     plugin = {"pretty", "listenerClasses.ExtentListener"

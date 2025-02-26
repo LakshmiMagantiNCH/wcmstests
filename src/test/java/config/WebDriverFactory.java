@@ -24,7 +24,7 @@ public class WebDriverFactory {
 		WebDriver driver;
 		switch (browser.toLowerCase()) {
 		 case "chrome":
-             WebDriverManager.chromedriver().setup(); // Ensure driver executable is set up
+             WebDriverManager.chromedriver().setup(); //Automatically downloads and sets up the ChromeDriver and Ensure driver executable is set up
              driver = new ChromeDriver();
              break;
          case "firefox":
