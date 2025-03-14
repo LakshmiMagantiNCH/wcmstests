@@ -226,7 +226,7 @@ public class Form {
 	public void application_submitted_successfully() {
 		try {
 			WebElement successmessage = driver.findElement(By.xpath("//p[normalize-space()='Thank you']"));
-			WebDriverFactory.scrolltoView(successmessage);
+			WebDriverFactory.scrolltoView(successmessage,driver);
 			WebDriverFactory.waitForElementToBeClickable(driver, successmessage, 10, 500);
 //			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 //			wait.pollingEvery(Duration.ofMillis(500));

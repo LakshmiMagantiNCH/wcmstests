@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Random;
@@ -20,7 +21,7 @@ public class UtilClass {
 	
 
 	public static String generateCurrentDate() {
-		LocalDate currentDate = LocalDate.now();
+		LocalDate currentDate = LocalDate.now(ZoneId.systemDefault());
 		 DateTimeFormatter formatter =  WebDriverFactory.isFirefox
 		            ? DateTimeFormatter.ofPattern("yyyy-MM-dd") // Firefox format
 		            : DateTimeFormatter.ofPattern("MM/dd/yyyy"); // Default format (e.g., Chrome)

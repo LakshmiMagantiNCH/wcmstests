@@ -1,6 +1,6 @@
 Feature: NationwideChildrens
 
-  @positive @firefox
+  @positive
   Scenario Outline: Succefull scenario of finding a doctor
     Given the user hovers over the "<url>" link on main page
     Then navigate to "find_a_doc" page
@@ -53,6 +53,7 @@ Feature: NationwideChildrens
       | nch | location_page_label | Find a Location | columbus |
 
   #Currently using uat link to test this, so captcha is appearing which is blocking to run the full test
+  @test1
   Scenario Outline: requesting an appointment
     Given the user hovers over the "<url>" link on main page
     Then navigate to "request_appointment" page
@@ -68,7 +69,6 @@ Feature: NationwideChildrens
     Then user "reason_for_appt" with "TEST"
     Then perform the "appointment_next"
     Then fill patient insurance details form
-
     #Then verify landed on the right "appoint_conf_page" with "Thank you for your appointment request"
     Examples: 
       | url | label                  | text                   | value    |

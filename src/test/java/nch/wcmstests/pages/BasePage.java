@@ -1,8 +1,8 @@
 package nch.wcmstests.pages;
 
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+
 
 public class BasePage {
 
@@ -13,6 +13,7 @@ public class BasePage {
 		PageFactory.initElements(driver, this);
 
 	}
+
 	
-	
+
 }

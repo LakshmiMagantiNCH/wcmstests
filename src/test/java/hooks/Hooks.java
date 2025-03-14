@@ -51,6 +51,7 @@ public class Hooks {
 
 				System.out.println("Launching tests on: " + browser);
 				driver = WebDriverFactory.initializeDriver(browser); // Initialize WebDriver for the browser
+				driver.manage().deleteAllCookies();
 				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); //Implicit wait(10 seconds)
 				driver.manage().window().maximize(); //Maximizes the browser window
 				// Mobile resolution (e.g., iPhone 12)
@@ -73,6 +74,7 @@ public class Hooks {
 		 try {
 	            if (driver != null) {
 	                driver.quit(); //Closes all the browsers
+	                WebDriverFactory.removeDriver();
 	                System.out.println("WebDriver instance closed successfully.");
 	            }
 	        } catch (Exception e) {

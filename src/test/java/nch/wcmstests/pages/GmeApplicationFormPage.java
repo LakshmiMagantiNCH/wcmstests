@@ -268,14 +268,14 @@ public class GmeApplicationFormPage extends BasePage {
 
 	public void setCheckbx() {
 		WebElement selectchbxelement = driver.findElement(selectchbx);
-		WebDriverFactory.scrolltoView(selectchbxelement);
+		WebDriverFactory.scrolltoView(selectchbxelement,driver);
 		WebDriverFactory.waitForElementToBeClickable(driver, selectchbxelement, 10, 500);
 		driver.findElement(selectchbx).click();
 	}
 
 	public void submit() {
 		WebElement submitelement = driver.findElement(submit);
-		WebDriverFactory.scrolltoView(submitelement);
+		WebDriverFactory.scrolltoView(submitelement,driver);
 		WebDriverFactory.waitForElementToBeClickable(driver, submitelement, 10, 500);
 		driver.findElement(submit).click();
 		
@@ -283,7 +283,7 @@ public class GmeApplicationFormPage extends BasePage {
 
 	
 	public void getRandomOption(WebElement dropdownElement) {
-		WebDriverFactory.scrolltoView(dropdownElement);
+		WebDriverFactory.scrolltoView(dropdownElement,driver);
 		WebElement element= WebDriverFactory.waitForElementToBeClickable(driver, dropdownElement, 10, 500);;
 		try {
 			 

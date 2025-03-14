@@ -16,8 +16,7 @@ import io.cucumber.java.en.Then;
 import listenerClasses.ExtentListener;
 import nch.wcmstests.pages.NationwideChildrensPage;
 
-public class NationwideChildrens {
-
+public class NationwideChildrens   {
 	public NationwideChildrensPage page;
 	public WebDriver driver;
 	public ExtentTest test;
@@ -131,7 +130,7 @@ public class NationwideChildrens {
 		try {
 			By label = page.getLocator(string);
 			WebElement element = page.findElement(label);
-			WebDriverFactory.scrolltoView(element);
+			WebDriverFactory.scrolltoView(element,driver);
 			WebDriverFactory.waitForElementToBeClickable(driver, element, 10, 500);
 			Assert.assertTrue(element.getText().contains(string1));
 		} catch (Throwable e) {

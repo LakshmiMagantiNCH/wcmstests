@@ -3,8 +3,10 @@ package nch.wcmstests.pages;
 import java.lang.reflect.Field;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import com.github.javafaker.Faker;
 
@@ -47,7 +49,7 @@ public class NationwideChildrensPage extends BasePage {
 	By patient_health_ins_covered = By.xpath("//input[@id='hasInsurance-Yes']");
 	By patient_primary_care_doc_info = By.xpath("//input[@id='hasPCP-no']");
 	By patient_nch_history = By.xpath("//input[@id='seenAtNCH-no']");
-	By next_button = By.xpath("//button[@type='submit']");
+	By next_button = By.cssSelector("button[type='submit']");
 	
 	
 	//Contact info form
@@ -65,7 +67,7 @@ public class NationwideChildrensPage extends BasePage {
 	//Parent/Guardian info form
 	By parent_first_name = By.cssSelector("input[name='firstName']");
 	By parent_last_name = By.cssSelector("input[name='lastName']");
-	By relation_info = By.cssSelector("#relationToChild-Mother");
+	By relation_info = By.id("relationToChild-Mother");
 	By parent_confirmation = By.cssSelector("#differentGuarantor-No");
 	By parent_info_next = By.cssSelector(".icon.icon--arrow-right");
 	
@@ -82,7 +84,7 @@ public class NationwideChildrensPage extends BasePage {
 	By accept_info = By.cssSelector("#accept-yes");
 	By captcha = By.cssSelector("div[class='recaptcha-checkbox-border']");
 	
-	By send_reuqest_button = By.cssSelector(".button.long.ng-star-inserted");
+	By send_request_button = By.cssSelector(".button.long.ng-star-inserted");
 	By appoint_conf_page = By.cssSelector(".h1");
 	
 	//search locators
@@ -106,18 +108,44 @@ public class NationwideChildrensPage extends BasePage {
 	}
 
 	public void navigateTo(By element) {
-		WebDriverFactory.scrolltoView(driver.findElement(element));
-		WebDriverFactory.waitForElementToBeClickable(driver, driver.findElement(element), 10, 500);
-		driver.findElement(element).click();
+		WebElement webElement = driver.findElement(element);
+		WebDriverFactory.scrolltoView(webElement, driver);
+		WebDriverFactory.waitForElementToBeVisible(driver, webElement, 10, 500);
+		WebDriverFactory.waitForElementToBeClickable(driver, webElement, 10, 500);
+		  if (!webElement.isSelected()) { // Click only if needed
+		        webElement.click();
+		    }
 	}
 
 	public void perform(By field, String value) {
-		WebDriverFactory.scrolltoView(driver.findElement(field));
-		WebDriverFactory.waitForElementToBeClickable(driver, driver.findElement(field), 10, 500);
-		driver.findElement(field).sendKeys(value);
+		WebElement element = driver.findElement(field);
+		WebDriverFactory.scrolltoView(element, driver);
+		WebDriverFactory.waitForElementToBeVisible(driver, element, 10, 500);
+		WebDriverFactory.waitForElementToBeClickable(driver, element, 10, 500);
+		element.clear();
+		element.sendKeys(value);
 	}
 
+	public void selectDropdown(By dropdown, String value) {
+	    WebElement element = driver.findElement(dropdown);
+	    WebDriverFactory.scrolltoView(element, driver);
+	    WebDriverFactory.waitForElementToBeVisible(driver, element, 10, 500);
+	    WebDriverFactory.waitForElementToBeClickable(driver, element, 10, 500);
+
+	    Select select = new Select(element);
+	    select.selectByVisibleText(value);
+	}
 	
+	public void performWithTab(By field, String value) {
+	    WebElement element = driver.findElement(field);
+	    WebDriverFactory.scrolltoView(element, driver);
+	    WebDriverFactory.waitForElementToBeVisible(driver, element, 10, 500);
+	    WebDriverFactory.waitForElementToBeClickable(driver, element, 10, 500);
+
+	    element.clear();
+	    element.sendKeys(value);
+	    element.sendKeys(Keys.TAB); // Moves focus to next field
+	}
 
 	public WebElement findElement(By label) {
 		return driver.findElement(label);
@@ -126,7 +154,7 @@ public class NationwideChildrensPage extends BasePage {
 	public void setPatientDetails() {
 		perform(patient_first_name,(faker.name().firstName()));
 		perform(patient_last_name, (faker.name().lastName()));
-		perform(patient_dob, (UtilClass.generateCurrentDate()));
+		performWithTab(patient_dob, (UtilClass.generateCurrentDate()));
 		navigateTo(patient_gender);
 		navigateTo(patient_gender_identity);
 		navigateTo(patient_health_ins_covered);
@@ -138,13 +166,13 @@ public class NationwideChildrensPage extends BasePage {
 	public void setPatientContactDetails() {
 		perform(street_info,"6737 Pine St");
 		perform(city_info,"Elyria");
-		perform(state_info,"Ohio");
+		selectDropdown(state_info,"Ohio");
 		perform(zipcode_info,"44036");
 		perform(phone_info,"6142342345");
 		navigateTo(phone_type_info);
 		navigateTo(text_authori);
 		perform(email_info,(faker.internet().emailAddress()));
-		perform(preffered_lang_info,"English");
+		selectDropdown(preffered_lang_info,"English");
 		navigateTo(contact_info_next_button);
 		
 		
@@ -167,7 +195,7 @@ public class NationwideChildrensPage extends BasePage {
 		navigateTo(terms_info);
 		navigateTo(accept_info);
 //		navigateTo(captcha);
-//		navigateTo(send_reuqest_button);
+//		navigateTo(send_request_button);
 		
 	}
 
